@@ -367,13 +367,18 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             background: #87CEEB;
             max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 2 / 1;
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
         }
 
         #gameCanvas {
             display: block;
             width: 100%;
-            height: auto;
-            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+            height: 100%;
+            background: transparent;
             cursor: pointer;
         }
 
@@ -417,6 +422,49 @@
             margin: 0.5rem 0;
         }
 
+        /* Share buttons */
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .twitter-btn {
+            background: #1DA1F2;
+        }
+
+        .facebook-btn {
+            background: #1877F2;
+        }
+
+        .copy-btn {
+            background: #667eea;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+        }
+
         /* Game HUD */
         .game-hud {
             display: flex;
@@ -430,6 +478,26 @@
             z-index: 1;
             font-size: 1.1rem;
             font-weight: 600;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hud-left {
+            display: flex;
+            gap: 2rem;
+            flex: 1;
+        }
+
+        .hud-center {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .hud-right {
+            display: flex;
+            gap: 1rem;
         }
 
         .hud-item {
@@ -441,6 +509,43 @@
             font-size: 1.3rem;
             font-weight: 800;
             color: #FCD34D;
+        }
+
+        .hud-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid #FCD34D;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .hud-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .hud-button:active {
+            transform: scale(0.95);
+        }
+
+        .overdrive-indicator {
+            background: linear-gradient(90deg, #FF6B35, #FFC300);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            animation: pulse-glow 0.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(255, 107, 53, 0.8); }
+            50% { opacity: 0.8; box-shadow: 0 0 20px rgba(255, 195, 0, 1); }
         }
 
         /* Disclaimer - Single Line */
@@ -801,7 +906,23 @@
                     <div class="game-overlay-content">
                         <h3 id="overlayTitle">Click to Start!</h3>
                         <p id="overlayScore"></p>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #9CA3AF;">
+                        <div id="shareSection" style="display: none;">
+                            <div class="share-buttons">
+                                <a class="share-btn twitter-btn" id="twitterBtn" target="_blank">
+                                    𝕏 Post Score
+                                </a>
+                                <a class="share-btn facebook-btn" id="facebookBtn" target="_blank">
+                                    f Share
+                                </a>
+                                <a class="share-btn whatsapp-btn" id="whatsappBtn" target="_blank">
+                                    💬 WhatsApp
+                                </a>
+                                <button class="share-btn copy-btn" id="copyBtn">
+                                    📋 Copy Link
+                                </button>
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #9CA3AF;" id="playText">
                             Click anywhere to play
                         </p>
                     </div>
@@ -809,11 +930,19 @@
             </div>
 
             <div class="game-hud">
-                <div class="hud-item">
-                    Score: <span id="gameScore">0</span>
+                <div class="hud-left">
+                    <div class="hud-item">
+                        Score: <span id="gameScore">0</span>
+                    </div>
+                    <div class="hud-item">
+                        Gas: <span id="gasDisplay">10</span>/10
+                    </div>
                 </div>
-                <div class="hud-item">
-                    Gas: <span id="gasDisplay">10</span>/10
+                <div class="hud-center">
+                    <div id="overdriveStatus"></div>
+                </div>
+                <div class="hud-right">
+                    <button class="hud-button" id="pauseButton">⏸ Pause</button>
                 </div>
             </div>
         </section>
@@ -856,23 +985,9 @@
     </footer>
 
     <script>
-        /*
-         * LIFETIME FARTS CALCULATOR
-         *
-         * This function calculates how many times a person has likely farted
-         * in their entire lifetime based on their birth year.
-         *
-         * The calculation:
-         * 1. Get current year and user's birth year
-         * 2. Calculate total days alive (years × 365.25 to account for leap years)
-         * 3. Multiply by different daily fart frequencies (8, 14, 25)
-         * 4. Assign a funny rank based on conservative estimate
-         * 5. Display results with emojis and humor
-         */
         function calculateLifetimeFarts() {
             const birthYearInput = document.getElementById('birthYear').value;
 
-            // Validate input
             if (!birthYearInput || birthYearInput < 1900 || birthYearInput > 2025) {
                 alert('Please enter a valid birth year between 1900 and 2025.');
                 return;
@@ -881,40 +996,24 @@
             const birthYear = parseInt(birthYearInput);
             const currentYear = new Date().getFullYear();
 
-            // Calculate days alive (accounting for leap years with 365.25)
             const yearsAlive = currentYear - birthYear;
             const daysAlive = yearsAlive * 365.25;
 
-            // Calculate lifetime farts at different frequencies
-            // Conservative (8 farts/day), Average (14 farts/day), Liberal (25 farts/day)
             const conservativeToots = Math.round(daysAlive * 8);
             const averageToots = Math.round(daysAlive * 14);
             const liberalToots = Math.round(daysAlive * 25);
 
-            // Update the display with calculated values
-            document.getElementById('conservativeCount').textContent =
-                conservativeToots.toLocaleString();
-            document.getElementById('averageCount').textContent =
-                averageToots.toLocaleString();
-            document.getElementById('liberalCount').textContent =
-                liberalToots.toLocaleString();
+            document.getElementById('conservativeCount').textContent = conservativeToots.toLocaleString();
+            document.getElementById('averageCount').textContent = averageToots.toLocaleString();
+            document.getElementById('liberalCount').textContent = liberalToots.toLocaleString();
 
-            // Assign a funny rank based on conservative estimate
-            // These are humorous titles based on cumulative fart experience
             const rank = getTootRank(conservativeToots);
             document.getElementById('rankEmoji').textContent = rank.emoji;
             document.getElementById('rankTitle').textContent = rank.title;
 
-            // Show results section with animation
             document.getElementById('results').classList.add('show');
         }
 
-        /*
-         * TOOT RANK SYSTEM
-         *
-         * Returns a funny rank title and emoji based on lifetime farts.
-         * The ranks progress from beginner to expert tooting levels.
-         */
         function getTootRank(conservativeToots) {
             if (conservativeToots < 50000) {
                 return { emoji: '🌬️', title: 'Wind Whisper' };
@@ -929,46 +1028,47 @@
             }
         }
 
-        /*
-         * FLAPPY FART GAME - Canvas-Based Game Engine
-         *
-         * A Flappy Bird-style game where players:
-         * - Click/tap to make character fart and jump
-         * - Manage a gas meter (starts at 10, costs 1 per jump)
-         * - Collect baked beans to refill gas (+3) and gain points (+10)
-         * - Avoid spiked balls (instant game over)
-         * - Survive as long as possible without hitting ceiling/floor
-         *
-         * Features physics simulation, collision detection, and sound placeholders
-         */
-
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const overlay = document.getElementById('gameOverlay');
 
-        // Fix canvas sizing for responsive display
         function resizeCanvas() {
             const container = canvas.parentElement;
             const rect = container.getBoundingClientRect();
-            const scale = Math.min(rect.width / 800, 1); // Max width is 800px
+            const aspectRatio = window.innerWidth / window.innerHeight;
 
-            canvas.style.width = (800 * scale) + 'px';
-            canvas.style.height = (400 * scale) + 'px';
+            canvas.width = 800;
+            canvas.height = 400;
+
+            const containerAspect = rect.width / rect.height;
+            const targetAspect = 800 / 400;
+
+            let scale = 1;
+            if (containerAspect > targetAspect) {
+                scale = rect.height / 400;
+            } else {
+                scale = rect.width / 800;
+            }
+
+            ctx.scale(scale, scale);
+            canvas.displayScale = scale;
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Game Constants - Balanced for playability
-        const GAME_WIDTH = canvas.width;  // Internal resolution: 800
-        const GAME_HEIGHT = canvas.height; // Internal resolution: 400
+        const GAME_WIDTH = 800;
+        const GAME_HEIGHT = 400;
         const GROUND_HEIGHT = 60;
-        const PLAYER_SIZE = 30;
-        const GRAVITY = 0.14;  // Slightly slower fall
-        const JUMP_POWER = -6.5; // Smaller jump - no more Superman! Need more frequent clicks
-        const GAME_SPEED = 2.5;  // A smidge slower obstacle movement
+        const CEILING_HEIGHT = 35;
+        const PLAYER_SIZE = 40;
+        const BEAN_SIZE = 50;
+        const SPIKE_SIZE = 35;
+        const GRAVITY = 0.12;
+        const JUMP_POWER = -6.8;
+        const BASE_GAME_SPEED = 2.2;
+        const MAX_GAME_SPEED = 4.8;
 
-        // Game Objects
-        let gameState = 'start'; // 'start', 'playing', 'gameOver'
+        let gameState = 'start';
         let player = {
             x: 100,
             y: GAME_HEIGHT / 2,
@@ -981,14 +1081,18 @@
             score: 0,
             gas: 10,
             maxGas: 10,
-            distance: 0
+            distance: 0,
+            overdrive: false,
+            overdriveDuration: 0,
+            overdriveCooldown: 0
         };
 
         let obstacles = [];
         let particles = [];
-        let nextSpawnDistance = 250;  // Increased from 150 for more breathing room at start
+        let nextSpawnDistance = 150;
+        let lastInputTime = 0;
+        const INPUT_DEBOUNCE = 100;
 
-        // Initialize game
         function initGame() {
             gameState = 'playing';
             player.y = GAME_HEIGHT / 2;
@@ -996,47 +1100,41 @@
             gameStats.score = 0;
             gameStats.gas = 10;
             gameStats.distance = 0;
+            gameStats.overdrive = false;
+            gameStats.overdriveDuration = 0;
+            gameStats.overdriveCooldown = 0;
             obstacles = [];
             particles = [];
             nextSpawnDistance = 150;
+            lastInputTime = 0;
             overlay.classList.add('hidden');
+            document.getElementById('shareSection').style.display = 'none';
+            document.getElementById('pauseButton').style.display = 'block';
             gameLoop();
         }
 
-        // Sound placeholder - user can add their own fart sound
-        function playFartSound() {
-            // Placeholder for fart sound effect
-            // To add sound: const fartSound = new Audio('fart.mp3'); fartSound.play();
-            // For now, just console log that sound would play
-            // console.log('Fart sound would play here');
-        }
+        function playFartSound() {}
 
-        // Handle jump/fart action
         function jump() {
-            // Allow starting from both 'start' and 'gameOver' states
+            const now = Date.now();
+            if (now - lastInputTime < INPUT_DEBOUNCE) return;
+            lastInputTime = now;
+
             if (gameState === 'start' || gameState === 'gameOver') {
                 initGame();
                 return;
             }
 
-            // Only allow jumping during gameplay
             if (gameState !== 'playing') return;
-
-            // Check if player has gas
             if (gameStats.gas <= 0) return;
 
-            // Apply jump
             player.velocityY = JUMP_POWER;
             gameStats.gas--;
             playFartSound();
-
-            // Create gas particle
             createGasParticle();
-
             updateHUD();
         }
 
-        // Create visual gas cloud effect
         function createGasParticle() {
             particles.push({
                 x: player.x + player.width / 2,
@@ -1047,72 +1145,113 @@
             });
         }
 
-        // Spawn obstacles and pickups
         function spawnObject() {
-            const type = Math.random() < 0.6 ? 'bean' : 'spike';
-            const minY = 60;
-            const maxY = GAME_HEIGHT - GROUND_HEIGHT - 40;
+            const rand = Math.random();
+            let type;
+            if (rand < 0.65) {
+                type = 'bean';
+            } else if (rand < 0.92) {
+                type = 'spike';
+            } else {
+                type = 'spicy';
+            }
+
+            const minY = 80;
+            const maxY = GAME_HEIGHT - GROUND_HEIGHT - 50;
             const y = Math.random() * (maxY - minY) + minY;
 
-            obstacles.push({
+            let width = (type === 'spike') ? SPIKE_SIZE : BEAN_SIZE;
+            let height = (type === 'spike') ? SPIKE_SIZE : BEAN_SIZE;
+
+            let obj = {
                 x: GAME_WIDTH,
                 y: y,
-                width: 30,
-                height: 30,
+                width: width,
+                height: height,
                 type: type,
-                collected: false
-            });
+                collected: false,
+                velocityY: 0
+            };
+
+            if (type === 'spike') {
+                obj.velocityY = (Math.random() - 0.5) * 1.2;
+                obj.minY = 80;
+                obj.maxY = GAME_HEIGHT - GROUND_HEIGHT - 50;
+            }
+
+            obstacles.push(obj);
         }
 
-        // Update game state
         function update() {
             if (gameState !== 'playing') return;
 
-            // Update distance traveled
-            gameStats.distance += GAME_SPEED;
+            const speedMultiplier = Math.min(1 + (gameStats.distance / 5000), 2.2);
+            const currentGameSpeed = BASE_GAME_SPEED * speedMultiplier;
 
-            // Apply gravity to player
+            gameStats.distance += currentGameSpeed;
+
+            if (gameStats.overdrive) {
+                gameStats.overdriveDuration--;
+                if (gameStats.overdriveDuration <= 0) {
+                    gameStats.overdrive = false;
+                }
+            }
+
+            if (gameStats.overdriveCooldown > 0) {
+                gameStats.overdriveCooldown--;
+            }
+
             player.velocityY += GRAVITY;
             player.y += player.velocityY;
 
-            // Check floor collision (ceiling is OK - can jump as high as you want!)
+            if (player.y - player.height / 2 <= CEILING_HEIGHT) {
+                player.y = CEILING_HEIGHT + player.height / 2;
+                player.velocityY = 0;
+            }
+
             if (player.y + player.height / 2 >= GAME_HEIGHT - GROUND_HEIGHT) {
                 endGame();
                 return;
             }
 
-            // Move obstacles
             for (let i = obstacles.length - 1; i >= 0; i--) {
-                obstacles[i].x -= GAME_SPEED;
+                obstacles[i].x -= currentGameSpeed;
 
-                // Check collision with player
+                if (obstacles[i].type === 'spike') {
+                    obstacles[i].y += obstacles[i].velocityY;
+                    if (obstacles[i].y <= obstacles[i].minY || obstacles[i].y >= obstacles[i].maxY) {
+                        obstacles[i].velocityY *= -1;
+                    }
+                }
+
                 if (checkCollision(player, obstacles[i])) {
                     if (obstacles[i].type === 'bean' && !obstacles[i].collected) {
-                        // Collect bean
                         obstacles[i].collected = true;
                         gameStats.gas = Math.min(gameStats.gas + 3, gameStats.maxGas);
                         gameStats.score += 10;
                         updateHUD();
-                    } else if (obstacles[i].type === 'spike') {
-                        // Hit spike - game over
+                    } else if (obstacles[i].type === 'spicy' && !obstacles[i].collected) {
+                        obstacles[i].collected = true;
+                        gameStats.overdrive = true;
+                        gameStats.overdriveDuration = 120;
+                        gameStats.score += 50;
+                        updateHUD();
+                    } else if (obstacles[i].type === 'spike' && !gameStats.overdrive) {
                         endGame();
                         return;
                     }
                 }
 
-                // Remove off-screen obstacles
                 if (obstacles[i].x < -50) {
                     obstacles.splice(i, 1);
                 }
             }
 
-            // Spawn new objects
             if (gameStats.distance > nextSpawnDistance) {
                 spawnObject();
-                nextSpawnDistance += 120 + Math.random() * 80;
+                nextSpawnDistance += 100 + Math.random() * 60;
             }
 
-            // Update particles
             for (let i = particles.length - 1; i >= 0; i--) {
                 particles[i].life--;
                 particles[i].y -= 2;
@@ -1124,28 +1263,53 @@
             }
         }
 
-        // Collision detection
         function checkCollision(player, obj) {
-            return player.x - player.width / 2 < obj.x + obj.width &&
-                   player.x + player.width / 2 > obj.x &&
-                   player.y - player.height / 2 < obj.y + obj.height &&
-                   player.y + player.height / 2 > obj.y;
+            const buffer = (obj.type === 'spike') ? 5 : 15;
+            return player.x - player.width / 2 - buffer < obj.x + obj.width &&
+                   player.x + player.width / 2 + buffer > obj.x &&
+                   player.y - player.height / 2 - buffer < obj.y + obj.height &&
+                   player.y + player.height / 2 + buffer > obj.y;
         }
 
-        // Render game
         function render() {
-            // Clear canvas with gradient sky
             const gradient = ctx.createLinearGradient(0, 0, 0, GAME_HEIGHT);
-            gradient.addColorStop(0, '#87CEEB');
-            gradient.addColorStop(1, '#E0F6FF');
+
+            if (gameStats.overdrive) {
+                gradient.addColorStop(0, '#FF6B35');
+                gradient.addColorStop(1, '#FFA500');
+            } else {
+                gradient.addColorStop(0, '#87CEEB');
+                gradient.addColorStop(1, '#E0F6FF');
+            }
+
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-            // Draw ground
+            const cloudOffset = (gameStats.distance * 0.3) % (GAME_WIDTH + 100);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.font = '60px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('☁️', GAME_WIDTH - cloudOffset + 100, 80);
+            ctx.fillText('☁️', GAME_WIDTH - cloudOffset + 300, 120);
+            ctx.fillText('☁️', GAME_WIDTH - cloudOffset + 500, 100);
+
+            ctx.font = '55px Arial';
+            ctx.fillStyle = 'rgba(255, 200, 200, 0.5)';
+            const buttOffset = (gameStats.distance * 0.2) % (GAME_WIDTH + 150);
+            ctx.fillText('🍑', GAME_WIDTH - buttOffset + 150, 200);
+            ctx.fillText('🍑', GAME_WIDTH - buttOffset + 450, 250);
+
+            ctx.font = '50px Arial';
+            ctx.fillStyle = 'rgba(200, 200, 100, 0.4)';
+            const fartOffset = (gameStats.distance * 0.25) % (GAME_WIDTH + 120);
+            ctx.fillText('💨', GAME_WIDTH - fartOffset + 200, 150);
+            ctx.fillText('💨', GAME_WIDTH - fartOffset + 550, 280);
+            ctx.fillText('💨', GAME_WIDTH - fartOffset + 700, 180);
+
             ctx.fillStyle = '#8B6914';
             ctx.fillRect(0, GAME_HEIGHT - GROUND_HEIGHT, GAME_WIDTH, GROUND_HEIGHT);
 
-            // Draw grass line
             ctx.strokeStyle = '#7A5910';
             ctx.lineWidth = 3;
             ctx.beginPath();
@@ -1153,22 +1317,60 @@
             ctx.lineTo(GAME_WIDTH, GAME_HEIGHT - GROUND_HEIGHT);
             ctx.stroke();
 
-            // Draw player
-            ctx.font = '30px Arial';
+            for (let i = 0; i < Math.ceil(GAME_WIDTH / 60) + 1; i++) {
+                const groundOffset = (gameStats.distance * 0.5) % 60;
+                const x = i * 60 - groundOffset;
+                ctx.strokeStyle = 'rgba(122, 89, 16, 0.4)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(x, GAME_HEIGHT - GROUND_HEIGHT);
+                ctx.lineTo(x, GAME_HEIGHT - GROUND_HEIGHT + 15);
+                ctx.stroke();
+            }
+
+            ctx.save();
+            ctx.translate(player.x, player.y);
+            ctx.scale(-1, 1);
+            ctx.font = '40px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText('🏃', player.x, player.y);
 
-            // Draw obstacles
+            if (gameStats.overdrive) {
+                ctx.fillStyle = `rgba(255, 107, 53, 0.3)`;
+                ctx.beginPath();
+                ctx.arc(0, 0, 50, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = `rgba(255, 195, 0, 0.6)`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(0, 0, 45, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            ctx.fillText('🏃', 0, 0);
+            ctx.restore();
+
             obstacles.forEach(obj => {
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
                 if (obj.type === 'bean') {
+                    ctx.font = '50px Arial';
                     ctx.fillText('🫘', obj.x + obj.width / 2, obj.y + obj.height / 2);
                 } else if (obj.type === 'spike') {
+                    ctx.font = '35px Arial';
                     ctx.fillText('💥', obj.x + obj.width / 2, obj.y + obj.height / 2);
+                } else if (obj.type === 'spicy') {
+                    ctx.font = '50px Arial';
+                    ctx.fillText('🌶️', obj.x + obj.width / 2, obj.y + obj.height / 2);
+                    ctx.fillStyle = 'rgba(255, 107, 53, 0.2)';
+                    ctx.beginPath();
+                    ctx.arc(obj.x + obj.width / 2, obj.y + obj.height / 2, 35, 0, Math.PI * 2);
+                    ctx.fill();
                 }
             });
 
-            // Draw gas particles
             particles.forEach(particle => {
                 ctx.fillStyle = `rgba(144, 238, 144, ${particle.opacity})`;
                 ctx.beginPath();
@@ -1177,36 +1379,98 @@
             });
         }
 
-        // Update HUD display
         function updateHUD() {
             document.getElementById('gameScore').textContent = gameStats.score;
             document.getElementById('gasDisplay').textContent = gameStats.gas;
+
+            const overdriveStatus = document.getElementById('overdriveStatus');
+            if (gameStats.overdrive) {
+                const remainingFrames = gameStats.overdriveDuration;
+                overdriveStatus.innerHTML = `<div class="overdrive-indicator">⚡ OVERDRIVE! (${Math.ceil(remainingFrames / 60)}s)</div>`;
+            } else {
+                overdriveStatus.innerHTML = '';
+            }
         }
 
-        // Game over
+        function togglePause() {
+            if (gameState === 'playing') {
+                gameState = 'paused';
+                document.getElementById('pauseButton').textContent = '▶ Resume';
+            } else if (gameState === 'paused') {
+                gameState = 'playing';
+                document.getElementById('pauseButton').textContent = '⏸ Pause';
+                gameLoop();
+            }
+        }
+
         function endGame() {
             gameState = 'gameOver';
             const distance = Math.floor(gameStats.distance / 10);
+            const finalScore = gameStats.score;
+
             document.getElementById('overlayTitle').textContent = '💀 Game Over!';
             document.getElementById('overlayScore').textContent =
-                `Score: ${gameStats.score} | Distance: ${distance}m | Gas Used: ${10 - gameStats.gas}`;
+                `Score: ${finalScore} | Distance: ${distance}m | Gas Used: ${10 - gameStats.gas}`;
+            document.getElementById('pauseButton').style.display = 'none';
+
+            const shareMessage = `I scored ${finalScore} points in Flappy Fart! 🚀💨 Can you beat my score?`;
+            const shareUrl = window.location.href;
+
+            document.getElementById('twitterBtn').href =
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}&url=${encodeURIComponent(shareUrl)}`;
+
+            document.getElementById('facebookBtn').href =
+                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
+            document.getElementById('whatsappBtn').href =
+                `https://wa.me/?text=${encodeURIComponent(shareMessage + ' ' + shareUrl)}`;
+
+            document.getElementById('copyBtn').onclick = function() {
+                const text = `${shareMessage} ${shareUrl}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = '✓ Copied!';
+                    setTimeout(() => { this.textContent = originalText; }, 2000);
+                });
+            };
+
+            document.getElementById('shareSection').style.display = 'block';
+            document.getElementById('playText').textContent = 'Click anywhere or share your score!';
+
             overlay.classList.remove('hidden');
         }
 
-        // Main game loop
         function gameLoop() {
-            update();
+            if (gameState !== 'paused') {
+                update();
+            }
             render();
 
-            if (gameState === 'playing') {
+            if (gameState === 'playing' || gameState === 'paused') {
                 requestAnimationFrame(gameLoop);
             }
         }
 
-        // Event listeners with proper click handling
+        let touchActive = false;
+        canvas.addEventListener('touchstart', (e) => {
+            if (touchActive) return;
+            e.preventDefault();
+            touchActive = true;
+
+            if (gameState !== 'paused') {
+                jump();
+            }
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            touchActive = false;
+        }, { passive: false });
+
         canvas.addEventListener('click', (e) => {
-            // Handle clicks on canvas during start/game over
-            jump();
+            if (gameState !== 'paused') {
+                jump();
+            }
         });
 
         document.addEventListener('keydown', (e) => {
@@ -1216,18 +1480,17 @@
             }
         });
 
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            jump();
+        document.getElementById('pauseButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            togglePause();
         });
 
-        // Also allow clicking the overlay to start
         overlay.addEventListener('click', jump);
 
-        // Show start screen
         overlay.classList.remove('hidden');
         document.getElementById('overlayTitle').textContent = '🎮 Click to Start!';
-        document.getElementById('overlayScore').textContent = 'Jump to avoid spikes, collect beans!';
+        document.getElementById('overlayScore').textContent = 'Jump to avoid spikes, collect beans! 🌶️ = Overdrive!';
+        document.getElementById('pauseButton').style.display = 'none';
         render();
     </script>
 </body>
