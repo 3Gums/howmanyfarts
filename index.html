@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover how many farts per day is normal. Most people fart 8-21 times daily. Calculate your lifetime farts and learn fun facts about flatulence.">
+    <meta name="theme-color" content="#6366F1">
+    <link rel="canonical" href="https://www.howmanyfarts.com/">
+    <title>How Many Farts a Day Is Normal? | The Toot Truth</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366F1;
+            --primary-light: #818CF8;
+            --secondary: #EC4899;
+            --accent: #F59E0B;
+            --text-dark: #1F2937;
+            --text-light: #F9FAFB;
+            --bg-gradient: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --bg-dark: #0F172A;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --success: #10B981;
+            --warning: #EF4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-gradient);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Hero Section - Compact & Modern */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .emoji {
+            font-size: 2.5rem;
+            display: inline-block;
+            margin: 0.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 1rem auto 0;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Card Styles - Modern Glassmorphism */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Answer Section - Modern Gradient */
+        .answer-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .answer-box strong {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        /* Calculator Section */
+        .calculator {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group {
+            margin: 1.5rem 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            background: #F9FAFB;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            padding: 0.9rem 2.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Results Section - Modern */
+        .results {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 1.5rem;
+            color: white;
+            text-align: center;
+            display: none;
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .results.show {
+            display: block;
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .results h3 {
+            font-size: 1.4rem;
+            margin: 0.5rem 0;
+        }
+
+        .lifetime-farts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .fart-stat {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .fart-stat:hover {
+            transform: translateY(-4px);
+        }
+
+        .fart-stat .number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .fart-stat .label {
+            font-size: 0.85rem;
+            color: #6B7280;
+            margin-top: 0.75rem;
+            font-weight: 500;
+        }
+
+        .toot-rank {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 1.5rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .toot-rank .emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .toot-rank div {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        /* Game Section - Canvas Based */
+        .game {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: visible;
+        }
+
+        .game::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .game h2 {
+            color: white;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            font-size: 1.6rem;
+        }
+
+        .game p {
+            position: relative;
+            z-index: 1;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Canvas Container */
+        .game-container {
+            position: relative;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #87CEEB;
+            max-width: 100%;
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+            cursor: pointer;
+        }
+
+        /* Game Overlay - Start/Game Over Screen */
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            backdrop-filter: blur(2px);
+        }
+
+        .game-overlay.hidden {
+            display: none;
+        }
+
+        .game-overlay-content {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .game-overlay-content h3 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-overlay-content p {
+            color: #4B5563;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Game HUD */
+        .game-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .hud-item {
+            color: #FCD34D;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hud-item span {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #FCD34D;
+        }
+
+        /* Disclaimer - Single Line */
+        .disclaimer {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+            color: #9CA3AF;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .disclaimer strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Footer - Modern */
+        footer {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #000000 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+            color: #D1D5DB;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--secondary);
+        }
+
+        /* Utility Classes */
+        .emoji {
+            display: inline-block;
+            font-style: normal;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border-left: 4px solid var(--success);
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 10px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .fun-fact:hover {
+            transform: translateX(5px);
+        }
+
+        .fun-fact strong {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Responsive Design - Mobile First */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+
+            .card h2 {
+                font-size: 1.4rem;
+            }
+
+            .lifetime-farts {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .fart-stat {
+                padding: 1rem;
+            }
+
+            .game-board {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 280px;
+                gap: 0.75rem;
+            }
+
+            .game {
+                padding: 1.5rem;
+            }
+
+            .game-timer {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .hero .emoji {
+                font-size: 2rem;
+                margin: 0.25rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 0.75rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+                margin: 0.75rem 0;
+            }
+
+            .card h2 {
+                font-size: 1.2rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .card h3 {
+                font-size: 1rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+            }
+
+            input[type="number"],
+            input[type="text"] {
+                padding: 0.75rem 0.9rem;
+                font-size: 16px;
+            }
+
+            button {
+                padding: 0.8rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            .game-board {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.6rem;
+                max-width: 240px;
+            }
+
+            .game-button {
+                font-size: 1.5rem;
+                border-radius: 10px;
+            }
+
+            .game {
+                padding: 1.25rem;
+                margin: 1rem 0;
+            }
+
+            .game h2 {
+                font-size: 1.3rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .game p {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
+            .game-timer {
+                font-size: 2rem;
+                margin: 0.75rem 0;
+            }
+
+            .game-stats {
+                font-size: 1rem;
+                margin: 1rem 0;
+            }
+
+            .lifetime-farts {
+                gap: 0.6rem;
+            }
+
+            .toot-rank {
+                padding: 1.5rem 1rem;
+                margin: 1rem auto;
+            }
+
+            .toot-rank .emoji {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .disclaimer {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+
+            .fun-fact {
+                padding: 1rem;
+                margin: 0.75rem 0;
+            }
+
+            footer {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Accessibility - Respect user preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: var(--bg-gradient);
+            }
+
+            .card {
+                background: rgba(30, 41, 59, 0.8);
+                color: #F9FAFB;
+            }
+
+            .card h2, .card h3 {
+                color: var(--primary-light);
+            }
+
+            input[type="number"],
+            input[type="text"] {
+                background: rgba(15, 23, 42, 0.8);
+                border-color: rgba(255, 255, 255, 0.2);
+                color: white;
+            }
+
+            .fun-fact {
+                background: rgba(16, 185, 129, 0.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>How Many Farts a Day Is Normal? <span class="emoji">💨</span></h1>
+        <p>The science-backed answer to your gassy questions!</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Quick Answer -->
+        <section class="card">
+            <h2>The Quick Answer <span class="emoji">🎯</span></h2>
+            <div class="answer-box">
+                <p>Most people fart between <strong>8–21 times per day</strong>. Up to 25 times a day can still be completely normal!</p>
+            </div>
+            <p>Flatulence is a normal biological function. The amount varies based on diet, digestion speed, and individual gut bacteria. Everyone's butt has its own unique "fart signature."</p>
+
+            <h3>Why Do We Fart?</h3>
+            <p>Your gut produces gas as it breaks down food. This gas needs to escape somehow—and that's what flatulence is. It's your body working hard to digest your dinner!</p>
+
+            <div class="fun-fact">
+                <strong>💡 Fun Fact:</strong> The average fart travels through the air at 7 mph and contains gases like nitrogen, hydrogen, carbon dioxide, and sometimes methane—which is flammable!
+            </div>
+        </section>
+
+        <!-- Lifetime Farts Calculator -->
+        <section class="card">
+            <h2>Your Lifetime Farts Calculator <span class="emoji">📊</span></h2>
+            <p>Enter your birth year to find out how many toots you've let loose in your lifetime!</p>
+
+            <div class="calculator">
+                <div class="form-group">
+                    <label for="birthYear">What year were you born?</label>
+                    <input
+                        type="number"
+                        id="birthYear"
+                        placeholder="e.g., 1990"
+                        min="1900"
+                        max="2025"
+                        aria-label="Birth year"
+                    >
+                </div>
+                <button onclick="calculateLifetimeFarts()" aria-label="Calculate lifetime farts">Calculate My Lifetime Farts</button>
+
+                <!-- Results Section (hidden until calculated) -->
+                <div id="results" class="results">
+                    <h3>🎉 Your Toot Statistics!</h3>
+
+                    <div class="lifetime-farts">
+                        <div class="fart-stat">
+                            <div class="number" id="conservativeCount">0</div>
+                            <div class="label">Conservative Estimate<br>(8 per day)</div>
+                        </div>
+                        <div class="fart-stat">
+                            <div class="number" id="averageCount">0</div>
+                            <div class="label">Average Estimate<br>(14 per day)</div>
+                        </div>
+                        <div class="fart-stat">
+                            <div class="number" id="liberalCount">0</div>
+                            <div class="label">Liberal Estimate<br>(25 per day)</div>
+                        </div>
+                    </div>
+
+                    <div class="toot-rank">
+                        <div class="emoji" id="rankEmoji">💨</div>
+                        <div id="rankTitle">Wind Whisperer</div>
+                    </div>
+
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 1.5rem;">
+                        ⚠️ <strong>Disclaimer:</strong> These are estimates based on average fart frequency. Your actual number depends on diet, health, and many individual factors!
+                    </p>
+                </div>
+            </div>
+
+            <div class="fun-fact">
+                <strong>💡 Fun Fact:</strong> Older people tend to fart more frequently due to slower digestion and changes in gut bacteria. So grandpa's extra toots are totally normal!
+            </div>
+        </section>
+
+        <!-- Flappy Fart Game -->
+        <section class="game">
+            <h2>Flappy Fart <span class="emoji">🚀</span></h2>
+            <p>Click or tap to make your character fart and jump! Collect beans, avoid spikes, and survive as long as you can!</p>
+
+            <div class="game-container">
+                <canvas id="gameCanvas" width="800" height="400"></canvas>
+                <div class="game-overlay" id="gameOverlay">
+                    <div class="game-overlay-content">
+                        <h3 id="overlayTitle">Click to Start!</h3>
+                        <p id="overlayScore"></p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #9CA3AF;">
+                            Click anywhere to play
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-hud">
+                <div class="hud-item">
+                    Score: <span id="gameScore">0</span>
+                </div>
+                <div class="hud-item">
+                    Gas: <span id="gasDisplay">10</span>/10
+                </div>
+            </div>
+        </section>
+
+        <!-- Health Disclaimer - Single Line -->
+        <section class="disclaimer">
+            <p><strong>⚠️ Medical Disclaimer:</strong> This site is for entertainment only. If you have digestive concerns, consult a healthcare professional.</p>
+        </section>
+
+        <!-- Additional Fun Facts -->
+        <section class="card">
+            <h2>More Toot Facts <span class="emoji">🧠</span></h2>
+
+            <div class="fun-fact">
+                <strong>🐟 Fish Fart Too:</strong> Not all fish produce audible farts, but herring use controlled gas bubbles to communicate!
+            </div>
+
+            <div class="fun-fact">
+                <strong>🌍 Cow Farts:</strong> Livestock is responsible for about 14-18% of global methane emissions. Cow burps are actually a bigger problem than their farts!
+            </div>
+
+            <div class="fun-fact">
+                <strong>👩‍🚀 Astronauts & Farts:</strong> NASA had to develop special spacesuits to handle the extra gas astronauts produce in space due to different digestion in zero gravity.
+            </div>
+
+            <div class="fun-fact">
+                <strong>🔥 Flammable Farts:</strong> Some farts contain enough hydrogen and methane to be flammable. This is why some people claim to have "set their farts on fire"—though this is dangerous and not recommended!
+            </div>
+
+            <div class="fun-fact">
+                <strong>🧬 Unique Signature:</strong> Your gut bacteria produce specific gases that give your farts a unique chemical signature—like a fingerprint!
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 How Many Farts. Built with ❤️ (and a little 💨)</p>
+        <p><a href="https://www.howmanyfarts.com/">howmanyfarts.com</a></p>
+    </footer>
+
+    <script>
+        /*
+         * LIFETIME FARTS CALCULATOR
+         *
+         * This function calculates how many times a person has likely farted
+         * in their entire lifetime based on their birth year.
+         *
+         * The calculation:
+         * 1. Get current year and user's birth year
+         * 2. Calculate total days alive (years × 365.25 to account for leap years)
+         * 3. Multiply by different daily fart frequencies (8, 14, 25)
+         * 4. Assign a funny rank based on conservative estimate
+         * 5. Display results with emojis and humor
+         */
+        function calculateLifetimeFarts() {
+            const birthYearInput = document.getElementById('birthYear').value;
+
+            // Validate input
+            if (!birthYearInput || birthYearInput < 1900 || birthYearInput > 2025) {
+                alert('Please enter a valid birth year between 1900 and 2025.');
+                return;
+            }
+
+            const birthYear = parseInt(birthYearInput);
+            const currentYear = new Date().getFullYear();
+
+            // Calculate days alive (accounting for leap years with 365.25)
+            const yearsAlive = currentYear - birthYear;
+            const daysAlive = yearsAlive * 365.25;
+
+            // Calculate lifetime farts at different frequencies
+            // Conservative (8 farts/day), Average (14 farts/day), Liberal (25 farts/day)
+            const conservativeToots = Math.round(daysAlive * 8);
+            const averageToots = Math.round(daysAlive * 14);
+            const liberalToots = Math.round(daysAlive * 25);
+
+            // Update the display with calculated values
+            document.getElementById('conservativeCount').textContent =
+                conservativeToots.toLocaleString();
+            document.getElementById('averageCount').textContent =
+                averageToots.toLocaleString();
+            document.getElementById('liberalCount').textContent =
+                liberalToots.toLocaleString();
+
+            // Assign a funny rank based on conservative estimate
+            // These are humorous titles based on cumulative fart experience
+            const rank = getTootRank(conservativeToots);
+            document.getElementById('rankEmoji').textContent = rank.emoji;
+            document.getElementById('rankTitle').textContent = rank.title;
+
+            // Show results section with animation
+            document.getElementById('results').classList.add('show');
+        }
+
+        /*
+         * TOOT RANK SYSTEM
+         *
+         * Returns a funny rank title and emoji based on lifetime farts.
+         * The ranks progress from beginner to expert tooting levels.
+         */
+        function getTootRank(conservativeToots) {
+            if (conservativeToots < 50000) {
+                return { emoji: '🌬️', title: 'Wind Whisper' };
+            } else if (conservativeToots < 150000) {
+                return { emoji: '💨', title: 'Wind Apprentice' };
+            } else if (conservativeToots < 350000) {
+                return { emoji: '🌪️', title: 'Toot Technician' };
+            } else if (conservativeToots < 650000) {
+                return { emoji: '⚡', title: 'Flatulence Phantom' };
+            } else {
+                return { emoji: '👑', title: 'Methane Monarch' };
+            }
+        }
+
+        /*
+         * FLAPPY FART GAME - Canvas-Based Game Engine
+         *
+         * A Flappy Bird-style game where players:
+         * - Click/tap to make character fart and jump
+         * - Manage a gas meter (starts at 10, costs 1 per jump)
+         * - Collect baked beans to refill gas (+3) and gain points (+10)
+         * - Avoid spiked balls (instant game over)
+         * - Survive as long as possible without hitting ceiling/floor
+         *
+         * Features physics simulation, collision detection, and sound placeholders
+         */
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const overlay = document.getElementById('gameOverlay');
+
+        // Fix canvas sizing for responsive display
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            const rect = container.getBoundingClientRect();
+            const scale = Math.min(rect.width / 800, 1); // Max width is 800px
+
+            canvas.style.width = (800 * scale) + 'px';
+            canvas.style.height = (400 * scale) + 'px';
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Game Constants - Balanced for playability
+        const GAME_WIDTH = canvas.width;  // Internal resolution: 800
+        const GAME_HEIGHT = canvas.height; // Internal resolution: 400
+        const GROUND_HEIGHT = 60;
+        const PLAYER_SIZE = 30;
+        const GRAVITY = 0.14;  // Slightly slower fall
+        const JUMP_POWER = -6.5; // Smaller jump - no more Superman! Need more frequent clicks
+        const GAME_SPEED = 2.5;  // A smidge slower obstacle movement
+
+        // Game Objects
+        let gameState = 'start'; // 'start', 'playing', 'gameOver'
+        let player = {
+            x: 100,
+            y: GAME_HEIGHT / 2,
+            width: PLAYER_SIZE,
+            height: PLAYER_SIZE,
+            velocityY: 0
+        };
+
+        let gameStats = {
+            score: 0,
+            gas: 10,
+            maxGas: 10,
+            distance: 0
+        };
+
+        let obstacles = [];
+        let particles = [];
+        let nextSpawnDistance = 250;  // Increased from 150 for more breathing room at start
+
+        // Initialize game
+        function initGame() {
+            gameState = 'playing';
+            player.y = GAME_HEIGHT / 2;
+            player.velocityY = 0;
+            gameStats.score = 0;
+            gameStats.gas = 10;
+            gameStats.distance = 0;
+            obstacles = [];
+            particles = [];
+            nextSpawnDistance = 150;
+            overlay.classList.add('hidden');
+            gameLoop();
+        }
+
+        // Sound placeholder - user can add their own fart sound
+        function playFartSound() {
+            // Placeholder for fart sound effect
+            // To add sound: const fartSound = new Audio('fart.mp3'); fartSound.play();
+            // For now, just console log that sound would play
+            // console.log('Fart sound would play here');
+        }
+
+        // Handle jump/fart action
+        function jump() {
+            // Allow starting from both 'start' and 'gameOver' states
+            if (gameState === 'start' || gameState === 'gameOver') {
+                initGame();
+                return;
+            }
+
+            // Only allow jumping during gameplay
+            if (gameState !== 'playing') return;
+
+            // Check if player has gas
+            if (gameStats.gas <= 0) return;
+
+            // Apply jump
+            player.velocityY = JUMP_POWER;
+            gameStats.gas--;
+            playFartSound();
+
+            // Create gas particle
+            createGasParticle();
+
+            updateHUD();
+        }
+
+        // Create visual gas cloud effect
+        function createGasParticle() {
+            particles.push({
+                x: player.x + player.width / 2,
+                y: player.y + player.height,
+                radius: 15,
+                opacity: 0.6,
+                life: 30
+            });
+        }
+
+        // Spawn obstacles and pickups
+        function spawnObject() {
+            const type = Math.random() < 0.6 ? 'bean' : 'spike';
+            const minY = 60;
+            const maxY = GAME_HEIGHT - GROUND_HEIGHT - 40;
+            const y = Math.random() * (maxY - minY) + minY;
+
+            obstacles.push({
+                x: GAME_WIDTH,
+                y: y,
+                width: 30,
+                height: 30,
+                type: type,
+                collected: false
+            });
+        }
+
+        // Update game state
+        function update() {
+            if (gameState !== 'playing') return;
+
+            // Update distance traveled
+            gameStats.distance += GAME_SPEED;
+
+            // Apply gravity to player
+            player.velocityY += GRAVITY;
+            player.y += player.velocityY;
+
+            // Check floor collision (ceiling is OK - can jump as high as you want!)
+            if (player.y + player.height / 2 >= GAME_HEIGHT - GROUND_HEIGHT) {
+                endGame();
+                return;
+            }
+
+            // Move obstacles
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                obstacles[i].x -= GAME_SPEED;
+
+                // Check collision with player
+                if (checkCollision(player, obstacles[i])) {
+                    if (obstacles[i].type === 'bean' && !obstacles[i].collected) {
+                        // Collect bean
+                        obstacles[i].collected = true;
+                        gameStats.gas = Math.min(gameStats.gas + 3, gameStats.maxGas);
+                        gameStats.score += 10;
+                        updateHUD();
+                    } else if (obstacles[i].type === 'spike') {
+                        // Hit spike - game over
+                        endGame();
+                        return;
+                    }
+                }
+
+                // Remove off-screen obstacles
+                if (obstacles[i].x < -50) {
+                    obstacles.splice(i, 1);
+                }
+            }
+
+            // Spawn new objects
+            if (gameStats.distance > nextSpawnDistance) {
+                spawnObject();
+                nextSpawnDistance += 120 + Math.random() * 80;
+            }
+
+            // Update particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].life--;
+                particles[i].y -= 2;
+                particles[i].opacity -= 0.02;
+
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        // Collision detection
+        function checkCollision(player, obj) {
+            return player.x - player.width / 2 < obj.x + obj.width &&
+                   player.x + player.width / 2 > obj.x &&
+                   player.y - player.height / 2 < obj.y + obj.height &&
+                   player.y + player.height / 2 > obj.y;
+        }
+
+        // Render game
+        function render() {
+            // Clear canvas with gradient sky
+            const gradient = ctx.createLinearGradient(0, 0, 0, GAME_HEIGHT);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#E0F6FF');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+            // Draw ground
+            ctx.fillStyle = '#8B6914';
+            ctx.fillRect(0, GAME_HEIGHT - GROUND_HEIGHT, GAME_WIDTH, GROUND_HEIGHT);
+
+            // Draw grass line
+            ctx.strokeStyle = '#7A5910';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(0, GAME_HEIGHT - GROUND_HEIGHT);
+            ctx.lineTo(GAME_WIDTH, GAME_HEIGHT - GROUND_HEIGHT);
+            ctx.stroke();
+
+            // Draw player
+            ctx.font = '30px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🏃', player.x, player.y);
+
+            // Draw obstacles
+            obstacles.forEach(obj => {
+                if (obj.type === 'bean') {
+                    ctx.fillText('🫘', obj.x + obj.width / 2, obj.y + obj.height / 2);
+                } else if (obj.type === 'spike') {
+                    ctx.fillText('💥', obj.x + obj.width / 2, obj.y + obj.height / 2);
+                }
+            });
+
+            // Draw gas particles
+            particles.forEach(particle => {
+                ctx.fillStyle = `rgba(144, 238, 144, ${particle.opacity})`;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        // Update HUD display
+        function updateHUD() {
+            document.getElementById('gameScore').textContent = gameStats.score;
+            document.getElementById('gasDisplay').textContent = gameStats.gas;
+        }
+
+        // Game over
+        function endGame() {
+            gameState = 'gameOver';
+            const distance = Math.floor(gameStats.distance / 10);
+            document.getElementById('overlayTitle').textContent = '💀 Game Over!';
+            document.getElementById('overlayScore').textContent =
+                `Score: ${gameStats.score} | Distance: ${distance}m | Gas Used: ${10 - gameStats.gas}`;
+            overlay.classList.remove('hidden');
+        }
+
+        // Main game loop
+        function gameLoop() {
+            update();
+            render();
+
+            if (gameState === 'playing') {
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // Event listeners with proper click handling
+        canvas.addEventListener('click', (e) => {
+            // Handle clicks on canvas during start/game over
+            jump();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                jump();
+            }
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            jump();
+        });
+
+        // Also allow clicking the overlay to start
+        overlay.addEventListener('click', jump);
+
+        // Show start screen
+        overlay.classList.remove('hidden');
+        document.getElementById('overlayTitle').textContent = '🎮 Click to Start!';
+        document.getElementById('overlayScore').textContent = 'Jump to avoid spikes, collect beans!';
+        render();
+    </script>
+</body>
+</html>
